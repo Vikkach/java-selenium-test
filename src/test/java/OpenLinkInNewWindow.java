@@ -40,7 +40,7 @@ public class OpenLinkInNewWindow {
         int numberOfLinks = chromeDrv.findElements(By.xpath("//i[@class='fa fa-external-link']")).size();
 
         //Click on every external link
-        for (int i=1; i<numberOfLinks; i++) {
+        for (int i=1; i<=numberOfLinks; i++) {
             String originalW = chromeDrv.getWindowHandle();
             Set<String> existWs = chromeDrv.getWindowHandles();
             chromeDrv.findElement(By.xpath("(//i[@class='fa fa-external-link'])[1]")).click();
