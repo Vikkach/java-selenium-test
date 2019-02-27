@@ -54,6 +54,8 @@ public class ProductsAndCartOperations {
     @Test
     public void addAndDeleteProductFromCart() {
         chromeDrv.get("http://localhost/litecart/");
+
+        //Add product to cart
         for (int i=0; i<3; i++) {
             chromeDrv.findElement(By.xpath("//div[@id='box-most-popular']//li[1]")).click();
             if (chromeDrv.findElements(By.xpath("//select[@name='options[Size]']")).size() > 0) {
@@ -66,8 +68,9 @@ public class ProductsAndCartOperations {
             wait.until(ExpectedConditions.textToBePresentInElementLocated(By.xpath("//span[@class='quantity']"), currentNumberOfProducts));
             chromeDrv.findElement(By.xpath("//a[@href='/litecart/']")).click();
         }
+
+        //Delete product from cart
         chromeDrv.findElement(By.xpath("//div[@id='cart']/a[@class='link']")).click();
-        String productName = chromeDrv.findElement(By.xpath("//form[@name='cart_form']//strong")).getText();
         while (chromeDrv.findElements(By.xpath("//div[@id='checkout-cart-wrapper']//em")).size() == 0) {
             wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@name='remove_cart_item']")));
             int numberOfElements = chromeDrv.findElements(By.xpath("//div[@id='order_confirmation-wrapper']//tr/td[@class='item']")).size();
