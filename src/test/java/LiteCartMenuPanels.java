@@ -30,11 +30,17 @@ public class LiteCartMenuPanels {
         chromeDrv.findElement(By.xpath("//span[@class='input-wrapper']//input[@name='username']")).sendKeys("admin");
         chromeDrv.findElement(By.xpath("//span[@class='input-wrapper']//input[@name='password']")).sendKeys("admin");
         chromeDrv.findElement(By.xpath("//button[@type='submit']")).click();
-        int i = 1;
-        while (chromeDrv.findElements(By.xpath("(//ul[@id='box-apps-menu']//a)" + "[" + i + "]")).size() > 0) {
-            chromeDrv.findElement(By.xpath("(//ul[@id='box-apps-menu']//a)" + "[" + i + "]")).click();
+        int mainMenuSize = chromeDrv.findElements(By.xpath("//ul[@id='box-apps-menu']/li/a/*[not(li)][@class='name']/..")).size();
+        for (int i = 1; i <= mainMenuSize; i++){
+            chromeDrv.findElement(By.xpath("(//ul[@id='box-apps-menu']/li/a/*[not(li)][@class='name']/..)" + "[" + i + "]")).click();
             Assert.assertNotEquals(0, chromeDrv.findElements(By.xpath("//h1")).size());
-            i++;
+            int subMenuSize = chromeDrv.findElements(By.xpath("//ul[@id='box-apps-menu']/li/ul/li")).size();
+            if (subMenuSize > 0) {
+                for (int j = 1; j <=subMenuSize; j++) {
+                    chromeDrv.findElement(By.xpath("(//ul[@id='box-apps-menu']/li/ul/li/a)" + "[" + j + "]")).click();
+                    Assert.assertNotEquals(0, chromeDrv.findElements(By.xpath("//h1")).size());
+                }
+            }
         }
     }
 }
